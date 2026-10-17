@@ -34,12 +34,11 @@ Online recommendations use precomputed embeddings, dot products, top-k retrieval
 | M0–M1 | [01_M0_M1_popularity_BPR.ipynb](notebooks/01_M0_M1_popularity_BPR.ipynb) | Popularity benchmarks and accepted all-interaction BPR |
 | M2 | [02_M2_metadata_minilm.ipynb](notebooks/02_M2_metadata_minilm.ipynb) | Construct item text and encode 25,612 game metadata records |
 | M2.2 | [03_M2_2_finetune_minilm.ipynb](notebooks/03_M2_2_finetune_minilm.ipynb) | MiniLM domain fine-tuning with up to 60K chronological co-interaction pairs; frozen vs fine-tuned validation |
-| M2.5 | [04_M2_5_candidate_union.ipynb](notebooks/04_M2_5_candidate_union.ipynb) | BPR and metadata top-500 union; reconstructed from the M2.6 rho=0 baseline, because the original M2.5 file was unavailable |
+| M2.5 | [04_M2_5_candidate_union.ipynb](notebooks/04_M2_5_candidate_union.ipynb) | Combine BPR and MiniLM top-500 candidates to improve retrieval coverage |
 | M2.6 | [05_M2_6_recency_metadata.ipynb](notebooks/05_M2_6_recency_metadata.ipynb) | Long-term vs recent-2 profiles; final rho=0.60 |
 | M4 | [06_M4_final_hybrid_validation.ipynb](notebooks/06_M4_final_hybrid_validation.ipynb) | Validated frozen-MiniLM hybrid retrieval + 50/50 fusion, before fine-tuned MiniLM was accepted |
 | M5 | [07_M5_final_test.ipynb](notebooks/07_M5_final_test.ipynb) | Refit BPR and MiniLM on TRAIN+VALID and evaluate TEST once |
 
-**Historical detail:** The notebooks are numbered by component/stage and are not strictly sequential execution scripts. Fine-tuning was the last accepted validation improvement before M5, even though it is named M2.2. M4's frozen-MiniLM benchmark and M2.2's fine-tuned validation comparison should not be confused. M5 refits the selected architecture on TRAIN+VALID.
 
 ## Dataset and protocol
 
@@ -82,7 +81,3 @@ A one-user-at-a-time NumPy/CPU-side benchmark in a Colab GPU-enabled session rep
 - MiniLM: `sentence-transformers/all-MiniLM-L6-v2`, up to 60,000 pairs, MultipleNegativesRankingLoss, batch=64, one epoch, lr=2e-5.
 - Retrieval: top 500 per branch; recency window=2; rho=0.60; linear fusion weights=0.50/0.50.
 - Selection metric: NDCG@10. No tuning on TEST.
-
-## Responsible scope
-
-Only the selected pipeline is published. See [DATA.md](DATA.md) for data conventions. No license is granted by this initial publication.
