@@ -2,7 +2,7 @@
 
 A two-stage personalized recommender built using **Bayesian Personalized Ranking (BPR)**, **contrastively fine-tuned MiniLM item embeddings**, **recency-aware user profiles**, and **linear score fusion**.
 
-This repository documents the actual development progression, from popularity and BPR baselines through metadata retrieval, contrastive domain adaptation, candidate union, recency modeling, final validation, and a one-time temporal TEST evaluation. It intentionally excludes rejected review-aware/DeBERTa, SASRec, and XGBoost learning-to-rank branches.
+This repository documents the actual development progression, from popularity and BPR baselines through metadata retrieval, contrastive domain adaptation, candidate union, recency modeling, final validation, and a one-time temporal TEST evaluation.
 
 ## Architecture
 
@@ -62,17 +62,6 @@ Online recommendations use precomputed embeddings, dot products, top-k retrieval
 
 **Relative to the refit BPR baseline:** candidate recall **+41.1%**, HR@10 **+60.7%**, NDCG@10 **+61.9%**.
 
-### MiniLM fine-tuning validation ablation
-
-| Metric | Frozen MiniLM | Fine-tuned MiniLM |
-| --- | ---: | ---: |
-| Metadata Recall@500 | 0.212585 | **0.281474** |
-| Union Recall@500 | 0.500338 | **0.533980** |
-| Hybrid HR@10 | 0.066250 | **0.075283** |
-| Hybrid NDCG@10 | 0.035109 | **0.039707** |
-
-The fine-tuned metadata retriever improved Recall@500 by about **32.4% relative** on VALID. These are **validation** results, not the final TEST figures above.
-
 ### Single-user serving benchmark
 
 A one-user-at-a-time NumPy/CPU-side benchmark in a Colab GPU-enabled session reported P50 **11.96 ms**, P95 **25.67 ms**, and throughput **73.7 requests/second** (sampled ~5,000 users, 100 warm-ups). These are implementation- and hardware-specific measurements, **not** a matched production benchmark against SASRec/HSTU.
@@ -96,4 +85,4 @@ A one-user-at-a-time NumPy/CPU-side benchmark in a Colab GPU-enabled session rep
 
 ## Responsible scope
 
-Only the selected pipeline is published. Rejected experiments remain outside this repository. See [DATA.md](DATA.md) for data conventions. No license is granted by this initial publication.
+Only the selected pipeline is published. See [DATA.md](DATA.md) for data conventions. No license is granted by this initial publication.
